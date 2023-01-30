@@ -1,0 +1,15 @@
+{
+    "recommendations": [
+        "sourcery.sourcery",
+        "vscode-icons-team.vscode-icons",
+        "ms-python.python",
+        "ms-python.vscode-pylance",
+        "eamodio.gitlens",
+        "aaron-bond.better-comments",
+        "njpwerner.autodocstring",
+        "usernamehw.errorlens",
+        "davidanson.vscode-markdownlint",
+        "ms-azuretools.vscode-docker",
+        "ms-vscode-remote.remote-containers"
+    ]
+}
