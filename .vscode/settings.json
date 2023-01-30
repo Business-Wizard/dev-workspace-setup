@@ -103,7 +103,7 @@
     "terminal.integrated.inheritEnv": false,
     "terminal.integrated.localEchoEnabled": "on",
     "terminal.integrated.shellIntegration.enabled": true,
-    "window.zoomLevel": 1,
+    "window.zoomLevel": 0,
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.iconTheme": "vscode-icons"
 }
