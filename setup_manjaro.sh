@@ -33,6 +33,13 @@ echo "alias pip=\"pip3\"" >> ~/.bashhrc && \
 echo "alias pip=\"pip3\"" >> ~/.zshrc && \
 exec $SHELL && \
 
+pip install pipx && pipx install poetry && \
+pipx install flake8 && pipx install black && pipx install ruff && pipx install poetry && \
+poetry config virtualenvs.create true && \
+poetry config virtualenvs.in-project true && \
+
+pyenv install 3.11 || pyenv install 3.10 || \
+
 
 wget -O torguard_install.tar.gz \
 https://torguard.net/downloads/new/torguard-latest-amd64-arch.tar.gz && \
