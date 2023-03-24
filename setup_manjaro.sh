@@ -3,12 +3,15 @@ sudo pamac checkupdates -a && \
 sudo pamac upgrade -a && \
 sudo sed -Ei '/EnableAUR/s/^#//' /etc/pamac.conf && \
 
+
 mkdir install_dir && \
 cd install_dir && \
+
 
 sudo wget https://raw.githubusercontent.com/archlinux/svntogit-packages/packages/base-devel/trunk/PKGBUILD && \
 echo "Y" | makepkg -si && \
 sudo rm -rf ./* && \
+
 
 git clone https://aur.archlinux.org/visual-studio-code-insiders-bin.git && \
 cd visual-studio-code-insiders-bin && \
@@ -28,10 +31,12 @@ echo "command -v pyenv >/dev/null || export PATH=\"\$PYENV_ROOT/bin:\$PATH\"" >>
 echo "eval \"\$(pyenv init -)\"" >> ~/.zshrc && \
 exec $SHELL && \
 
+
 python -m ensurepip --upgrade && \
 echo "alias pip=\"pip3\"" >> ~/.bashhrc && \
 echo "alias pip=\"pip3\"" >> ~/.zshrc && \
 exec $SHELL && \
+
 
 pip install pipx && pipx install poetry && \
 pipx install flake8 && pipx install black && pipx install ruff && pipx install poetry && \
