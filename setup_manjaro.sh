@@ -34,7 +34,6 @@ echo "alias pip=\"pip3\"" >> ~/.zshrc && \
 exec $SHELL && \
 
 
-
 wget -O torguard_install.tar.gz \
 https://torguard.net/downloads/new/torguard-latest-amd64-arch.tar.gz && \
 find ./ -iname "tor*.tar.gz" | xargs tar xf && \
@@ -42,4 +41,3 @@ cd $(find ./ -name "torguard*arch")  && \
 echo "Y" | makepkg -si && \
 cd .. && \
 sudo rm -rf ./*
-
