@@ -49,6 +49,7 @@ pyenv install 3.11 || pyenv install 3.10 || \
 curl --proto '=https' --tlsv1.2 -sSf https://sh.rustup.rs | sh -s -- -y
 
 
+echo "Y" | sudo pacman -S wireguard-tools && \
 wget -O torguard_install.tar.gz \
 https://torguard.net/downloads/new/torguard-latest-amd64-arch.tar.gz && \
 find ./ -iname "tor*.tar.gz" | xargs tar xf && \
