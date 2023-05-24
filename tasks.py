@@ -1,8 +1,26 @@
-def init():
-    """
-        sudo apt-get update
-        sudo apt-get install ./docker-desktop-4.16.1-amd64.deb
-        systemctl --user enable docker-desktop  # starts docker-desktop
-        systemctl --user stop docker-desktop
-    """
-    # make use of variables so it can function in the future
+import pathlib
+from invoke import tasks
+from invoke.context import Context
+import yaml
+
+SECRETS = pathlib.Path('secrets.yaml')
+
+
+# create task to update vscode
+@tasks.task
+def update_vscode(context: Context):
+    password: str = _read_secrets()['password']
+
+    cmd_clone_repo = "git clone https://aur.archlinux.org/visual-studio-code-insiders-bin.git"
+    context.run(command=cmd_clone_repo)
+    repo_path = pathlib.Path("visual-studio-code-insiders-bin")
+    with context.cd(path=repo_path):
+        context.run(command="echo 'Y' | makepkg -si")
+        context.sudo(command="pacman -U", password=password)
+    context.sudo(
+        command="rm -rf ./visual-studio-code-insiders-bin", password=password
+    )
+
+
+def _read_secrets() -> dict[str, str]:
+    return yaml.load(stream=SECRETS.read_text(), Loader=yaml.SafeLoader)
