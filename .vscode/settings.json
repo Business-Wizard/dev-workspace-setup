@@ -4,7 +4,6 @@
             50
         ]
     },
-    "audioCues.lineHasInlineSuggestion": "on",
     "better-comments.highlightPlainText": true,
     "debug.console.fontFamily": "Fira Code, default",
     "diffEditor.codeLens": true,
@@ -71,7 +70,6 @@
     "python.analysis.completeFunctionParens": true,
     "python.analysis.inlayHints.functionReturnTypes": true,
     "python.analysis.inlayHints.variableTypes": false,
-    "python.analysis.typeCheckingMode": "basic",
     "python.diagnostics.sourceMapsEnabled": true,
     "python.formatting.blackArgs": [
         "--line-length 100",
@@ -103,7 +101,7 @@
     "terminal.integrated.inheritEnv": false,
     "terminal.integrated.localEchoEnabled": "on",
     "terminal.integrated.shellIntegration.enabled": true,
-    "window.zoomLevel": 0,
+    "window.zoomLevel": -1,
     "workbench.editor.pinnedTabSizing": "shrink",
     "workbench.iconTheme": "vscode-icons"
 }
