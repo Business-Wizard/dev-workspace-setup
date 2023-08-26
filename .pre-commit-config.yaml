@@ -77,6 +77,7 @@ repos:
     rev: v1.5.2
     hooks:
       - id: dead
+        args: ["--exclude", "tasks.py"]
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:
