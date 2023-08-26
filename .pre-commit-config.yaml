@@ -1,13 +1,5 @@
 default_stages:
-  [
-    commit,
-    push,
-    manual,
-    prepare-commit-msg,
-    commit-msg,
-    post-merge,
-    post-rewrite,
-  ]
+  [commit, push, manual, prepare-commit-msg, post-merge, post-rewrite]
 default_install_hook_types:
   [pre-commit, commit-msg, pre-push, post-rewrite, post-merge]
 
@@ -109,13 +101,14 @@ repos:
         always_run: true
       - id: commit-msg-length
         name: commit-msg-length
+        stages: [commit-msg]
         language: pygrep
         entry: '^.{8,50}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$'
         args: ["--negate"]
       - id: commit-msg
         name: conventional-commit
+        stages: [commit-msg]
         language: pygrep
         entry: >-
-          ^(?:(?:Merge branch .{2,30} into .{2,30})|
-          (?:chore|test|build|docs|feat|fix|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}
-          (?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
+          ^(?:(?:Merge branch .{2,30} into .{2,30})|(?:chore|test|build|docs|feat|fix|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
+        args: ["--negate"]
