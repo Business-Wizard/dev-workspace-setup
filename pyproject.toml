@@ -59,3 +59,15 @@ max-complexity = 8
 [tool.ruff.flake8-quotes]
 inline-quotes = "double"
 multiline-quotes = "double"
+
+
+[tool.black]
+line-length = 90
+target-version = ["py311"]
+skip-string-normalization = true
+
+[tool.isort]
+profile = "black"
+line_length = 90
+py_version = 311
+filter_files = true
