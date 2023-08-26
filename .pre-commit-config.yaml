@@ -105,3 +105,18 @@ repos:
             "clippy::all",
           ]
         language: system
+  - repo: local
+    hooks:
+      - id: pytest
+        language: system
+        name: pytest
+        types: [python]
+        entry: .venv/bin/pytest
+        args:
+          - "tests/"
+          - "-m"
+          - "not network"
+          - "-n"
+          - "logical"
+        pass_filenames: false
+        always_run: true
