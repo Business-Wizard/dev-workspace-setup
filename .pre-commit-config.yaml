@@ -107,3 +107,15 @@ repos:
           - "logical"
         pass_filenames: false
         always_run: true
+      - id: commit-msg-length
+        name: commit-msg-length
+        language: pygrep
+        entry: '^.{8,50}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$'
+        args: ["--negate"]
+      - id: commit-msg
+        name: conventional-commit
+        language: pygrep
+        entry: >-
+          ^(?:(?:Merge branch .{2,30} into .{2,30})|
+          (?:chore|test|build|docs|feat|fix|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}
+          (?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
