@@ -48,7 +48,6 @@ repos:
     rev: 5.12.0
     hooks:
       - id: isort
-        args: ["--profile", "black", "--filter-files"]
   - repo: https://github.com/pre-commit/pygrep-hooks
     rev: v1.10.0
     hooks:
@@ -57,23 +56,17 @@ repos:
       - id: python-check-blanket-noqa
       - id: python-no-eval
   - repo: https://github.com/psf/black
-    rev: 23.7.0 # https://github.com/psf/black/issues/2964#issuecomment-1080974737
+    rev: 23.7.0
     hooks:
       - id: black
-        args:
-          - "-S"
   - repo: https://github.com/pre-commit/mirrors-mypy
     rev: v1.5.1
     hooks:
       - id: mypy
-        args: [--ignore-missing-imports]
   - repo: https://github.com/pycqa/flake8
     rev: 6.1.0
     hooks:
       - id: flake8
-        args: # arguments to configure flake8
-          # making isort line length compatible with black
-          - "--max-line-length=100"
   - repo: https://github.com/asottile/dead
     rev: v1.5.2
     hooks:
