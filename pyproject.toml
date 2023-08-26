@@ -60,6 +60,17 @@ max-complexity = 8
 inline-quotes = "double"
 multiline-quotes = "double"
 
+[tool.mypy]
+python_version = "3.11"
+check_untyped_defs = true
+ignore_missing_imports = true
+install_types = true
+non_interactive = true
+show_error_codes = true
+warn_no_return = true
+warn_redundant_casts = true
+warn_unreachable = true
+warn_unused_ignores = true
 
 [tool.black]
 line-length = 90
