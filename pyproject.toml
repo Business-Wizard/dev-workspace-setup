@@ -30,11 +30,26 @@ build-backend = "poetry.core.masonry.api"
 
 
 [tool.ruff]
+select = [
+    "A",
+    "B",
+    "C",
+    "D",
+    "E",
+    "F",
+    "I",
+    "UP",
+    "PL",
+    "PTH",
+    "PGH",
+    "ERA",
+    "RUF",
+    "TRY",
+]
 target-version = "py311"
 line-length = 90
-select = ["A", "B", "C", "D", "E", "F", "I", "UP", "PL", "PTH"]
 # maturity path:
-# "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "RUF", "ARG", "RET", "PD", "N", "PLC", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
+# "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "PGH", "RUF", "ARG", "RET", "PD", "N", "PLC", "PT", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
 ignore = ["PLR2004", "E501", "COM812"]
 fix = true
 
