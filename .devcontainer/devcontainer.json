@@ -14,7 +14,6 @@
 		"ghcr.io/devcontainers-contrib/features/bandit:2": {},
 		"ghcr.io/devcontainers-contrib/features/black:2": {},
 		"ghcr.io/devcontainers-contrib/features/cookiecutter:2": {},
-		"ghcr.io/devcontainers-contrib/features/flake8:2": {},
 		"ghcr.io/devcontainers-contrib/features/isort:2": {},
 		"ghcr.io/devcontainers-contrib/features/mypy:2": {},
 		"ghcr.io/devcontainers-contrib/features/nox:2": {},
@@ -36,7 +35,8 @@
 				"njpwerner.autodocstring",
 				"sourcery.sourcery",
 				"usernamehw.errorlens",
-				"vscode-icons-team.vscode-icons"
+				"vscode-icons-team.vscode-icons",
+				"charliermarsh.ruff"
 			]
 		}
 	}

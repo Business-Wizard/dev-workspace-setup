@@ -39,7 +39,7 @@ exec $SHELL && \
 
 
 pip install pipx && pipx install poetry && \
-pipx install flake8 && pipx install black && pipx install ruff && pipx install poetry && \
+pipx install black && pipx install ruff && pipx install poetry && \
 poetry config virtualenvs.create true && \
 poetry config virtualenvs.in-project true && \
 
