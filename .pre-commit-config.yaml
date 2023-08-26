@@ -109,6 +109,7 @@ repos:
         name: conventional-commit
         stages: [commit-msg]
         language: pygrep
-        entry: >-
-          ^(?:(?:Merge branch .{2,30} into .{2,30})|(?:chore|test|build|docs|feat|fix|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
+        entry: |-
+          ^(?:(?:Merge branch .{2,30} into .{2,30})
+          |(?:chore|test|build|docs|feat|fix|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
         args: ["--negate"]
