@@ -1,5 +1,13 @@
 secrets.*
 
+
+# Rust Cargo
+/target
+**/*.rs.bk
+Cargo.lock
+bin/
+pkg/
+
 # Byte-compiled / optimized / DLL files
 __pycache__/
 *.py[cod]
