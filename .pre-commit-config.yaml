@@ -114,6 +114,5 @@ repos:
         stages: [commit-msg]
         language: pygrep
         entry: >-
-          ^(?:(?:Merge branch .{2,30} into .{2,30})
-          |(?:chore|test|build|docs|feat|fix|drop|refactor|fixup|style|revert)(?:\(.{2,20}\))?!?: ).{0,45}(?:\n{2}|$)(?:.{0,72}(\n|$)){0,20}$
+          ^(chore|test|feat|fix|build|docs|refactor)!?(\([a-z]+\))?: (?![A-Z])(?![a-z]+(ed|ing)\s).*$
         args: ["--negate"]
