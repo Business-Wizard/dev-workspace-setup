@@ -5,18 +5,18 @@ description = "DESCRIPTION"
 authors = ["Your Name <you@example.com>"]
 license = "Proprietary"
 readme = "README.md"
+packages = [{ include = "src" }]
 
 [tool.poetry.dependencies]
-python = "^3.11"
-invoke = ">=2.0.0"
-pyyaml = "^6.0"
+python = "^3.12"
+pyyaml = "^6.0.1"
+invoke = "^2.2.0"
 
 
 [tool.poetry.group.dev.dependencies]
-black = "^23.7.0"
-mypy = ">=1.3"
 pre-commit = ">=2.21.0"
-ruff = "^0.0.286"
+pyright = "^1.1.352"
+ruff = "^0.3.0"
 
 
 [tool.poetry.group.test.dependencies]
@@ -45,7 +45,7 @@ select = [
     "RUF",
     "TRY",
 ]
-target-version = "py311"
+target-version = "py312"
 line-length = 90
 # maturity path:
 # "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "PGH", "RUF", "ARG", "RET", "PD", "N", "PLC", "PT", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
@@ -73,25 +73,8 @@ max-complexity = 8
 inline-quotes = "double"
 multiline-quotes = "double"
 
-[tool.mypy]
-python_version = "3.11"
-check_untyped_defs = true
-ignore_missing_imports = true
-install_types = true
-non_interactive = true
-show_error_codes = true
-warn_no_return = true
-warn_redundant_casts = true
-warn_unreachable = true
-warn_unused_ignores = true
-
-[tool.black]
-line-length = 90
-target-version = ["py311"]
-skip-string-normalization = true
-
-[tool.isort]
-profile = "black"
-line_length = 90
-py_version = 311
-filter_files = true
+[tool.pyright]
+pythonVersion = "3.12"
+venvPath = "."
+venv = ".venv"
+typeCheckingMode = "strict"

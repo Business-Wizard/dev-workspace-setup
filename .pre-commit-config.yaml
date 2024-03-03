@@ -30,6 +30,10 @@ repos:
     hooks:
       - id: ruff
       - id: ruff-format
+  - repo: https://github.com/RobertCraigie/pyright-python
+    rev: v1.1.352
+    hooks:
+    - id: pyright
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:

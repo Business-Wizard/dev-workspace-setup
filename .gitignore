@@ -1,4 +1,5 @@
 secrets.*
+typings/
 
 
 # Rust Cargo
