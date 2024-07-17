@@ -84,4 +84,13 @@
     "workbench.iconTheme": "vscode-icons",
     "git.branchProtectionPrompt": "alwaysCommit",
     "editor.defaultFormatter": "charliermarsh.ruff",
+    "mypy-type-checker.args": [
+        "--follow-imports=silent",
+        "--ignore-missing-imports",
+        "--show-column-numbers",
+        "--no-pretty",
+        "--continue-on-collection-errors",
+        "--show-error-codes",
+        "--warn-unused-ignores"
+    ]
 }
