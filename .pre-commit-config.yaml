@@ -33,7 +33,7 @@ repos:
   - repo: https://github.com/RobertCraigie/pyright-python
     rev: v1.1.352
     hooks:
-    - id: pyright
+      - id: pyright
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:
