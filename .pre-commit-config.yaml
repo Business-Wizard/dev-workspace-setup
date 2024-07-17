@@ -85,5 +85,5 @@ repos:
         stages: [commit-msg]
         language: pygrep
         entry: >-
-          ^(chore|test|feat|fix|build|docs|refactor)!?(\([a-z]+\))?: (?![A-Z])(?![a-z]+(ed|ing)\s).*$
+          ^(chore|test|feat|fix|fixup|build|docs|refactor)!?(\([a-z]+\))?: (?![A-Z])(?![a-z]+(ed|ing)\s).*$
         args: ["--negate"]
