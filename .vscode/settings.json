@@ -103,5 +103,6 @@
     "terminal.integrated.shellIntegration.enabled": true,
     "window.zoomLevel": -1,
     "workbench.editor.pinnedTabSizing": "shrink",
-    "workbench.iconTheme": "vscode-icons"
+    "workbench.iconTheme": "vscode-icons",
+    "git.branchProtectionPrompt": "alwaysCommit"
 }
