@@ -72,8 +72,6 @@ repos:
           - "tests/"
           - "-m"
           - "not network"
-          - "-n"
-          - "logical"
         pass_filenames: false
         always_run: true
       - id: commit-msg-length
