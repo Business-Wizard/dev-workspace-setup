@@ -19,7 +19,6 @@ pkgs.mkShell {
       rye venv create .venv
     fi
 
-    # Activate the virtual environment
     echo "Activating the virtual environment..."
     source .venv/bin/activate
   '';
