@@ -16,7 +16,7 @@ pkgs.mkShell {
   shellHook = ''
     if [ ! -d ".venv" ]; then
       echo "Creating a virtual environment..."
-      rye venv create .venv
+      rye sync
     fi
 
     echo "Activating the virtual environment..."
