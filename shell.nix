@@ -5,6 +5,7 @@ in
 
 let
   shell_packages = with pkgs; [
+    nushell
     pre-commit
     rye
   ];
@@ -23,5 +24,7 @@ pkgs.mkShell {
       echo "Activating the virtual environment..."
       source .venv/bin/activate
     fi
+
+    nu
   '';
 }
