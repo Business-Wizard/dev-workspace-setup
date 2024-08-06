@@ -14,12 +14,14 @@ pkgs.mkShell {
   buildInputs = shell_packages;
 
   shellHook = ''
-    if [ ! -d ".venv" ]; then
+    if [ ! -d ".venv" ] && [ -f "pyproject.toml" ]; then
       echo "Creating a virtual environment..."
       rye sync
     fi
 
-    echo "Activating the virtual environment..."
-    source .venv/bin/activate
+    if [ -d ".venv" ]; then
+      echo "Activating the virtual environment..."
+      source .venv/bin/activate
+    fi
   '';
 }
