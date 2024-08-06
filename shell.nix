@@ -6,8 +6,12 @@ in
 let
   shell_packages = with pkgs; [
     nushell
+    bat
+    eza
     pre-commit
     rye
+    cargo
+    rustup
   ];
 in
 
