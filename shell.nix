@@ -39,5 +39,7 @@ pkgs.mkShell {
         podman machine start
       }
     '
+
+    nu;
   '';
 }
