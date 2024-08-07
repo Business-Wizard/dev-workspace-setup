@@ -13,6 +13,8 @@ let
     cargo
     rustup
     vscode
+    docker
+      podman
   ];
 in
 
@@ -31,5 +33,11 @@ pkgs.mkShell {
     fi
 
     nu
+
+    let podman_vm_is_running = (podman machine info | from json |  get machinestate) == "Running";
+    if not $podman_vm_is_running; then
+      echo "Starting the podman VM..."
+      podman machine start
+    fi
   '';
 }
