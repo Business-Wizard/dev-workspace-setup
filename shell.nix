@@ -9,7 +9,7 @@ let
     bat
     eza
     pre-commit
-    rye
+    uv
     cargo
     rustup
     vscode
@@ -24,7 +24,7 @@ pkgs.mkShell {
   shellHook = ''
     if [ ! -d ".venv" ] && [ -f "pyproject.toml" ]; then
       echo "Creating a virtual environment..."
-      rye sync
+      uv sync
     fi
 
     if [ -d ".venv" ]; then
