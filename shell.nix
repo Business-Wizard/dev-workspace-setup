@@ -5,7 +5,6 @@ in
 
 let
   shell_packages = with pkgs; [
-    nushell
     bat
     eza
     pre-commit
@@ -32,14 +31,10 @@ pkgs.mkShell {
       source .venv/bin/activate
     fi
 
-    nu -c '
-      let podman_vm_is_running = (podman machine info | from json | get machinestate) == "Running";
-      if not $podman_vm_is_running {
-        echo "Starting the podman VM..."
-        podman machine start
-      }
-    '
-
-    nu;
+    podman_vm_state=$(podman machine info --format json | jq -r '.MachineState')
+    if [ "$podman_vm_state" != "Running" ]; then
+      echo "Starting the podman VM..."
+      podman machine start
+    fi
   '';
 }
