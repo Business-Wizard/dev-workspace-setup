@@ -1,11 +1,11 @@
 default_stages:
-  [commit, push, manual, prepare-commit-msg, post-merge, post-rewrite]
+  [pre-commit, pre-push, manual, prepare-commit-msg, post-merge, post-rewrite]
 default_install_hook_types:
   [pre-commit, commit-msg, pre-push, post-rewrite, post-merge]
 
 repos:
   - repo: https://github.com/pre-commit/pre-commit-hooks
-    rev: v4.5.0
+    rev: v5.0.0
     hooks:
       - id: check-ast
       - id: check-added-large-files
@@ -26,12 +26,12 @@ repos:
       - id: sort-simple-yaml
       - id: trailing-whitespace
   - repo: https://github.com/astral-sh/ruff-pre-commit
-    rev: v0.3.0
+    rev: v0.11.10
     hooks:
       - id: ruff
       - id: ruff-format
   - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.352
+    rev: v1.1.400
     hooks:
       - id: pyright
   - repo: https://github.com/doublify/pre-commit-rust
