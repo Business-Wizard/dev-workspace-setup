@@ -21,20 +21,32 @@ pkgs.mkShell {
   buildInputs = shell_packages;
 
   shellHook = ''
-    if [ ! -d ".venv" ] && [ -f "pyproject.toml" ]; then
+    has_venv_dir=false
+    has_pyproject=false
+    is_linux=false
+
+    [ -d ".venv" ] && has_venv_dir=true
+    [ -f "pyproject.toml" ] && has_pyproject=true
+    [ "$(uname -s)" = "Linux" ] && is_linux=true
+
+    if ! $has_venv_dir && $has_pyproject; then
       echo "Creating a virtual environment..."
       uv sync
     fi
 
-    if [ -d ".venv" ]; then
+    if $has_venv_dir; then
       echo "Activating the virtual environment..."
       source .venv/bin/activate
     fi
 
-    podman_vm_state=$(podman machine info --format json | jq -r '.MachineState')
-    if [ "$podman_vm_state" != "Running" ]; then
-      echo "Starting the podman VM..."
-      podman machine start
+    if ! $is_linux; then
+      podman_vm_state=$(podman machine info --format json | jq -r '.MachineState')
+      podman_vm_running=false
+      [ "$podman_vm_state" = "Running" ] && podman_vm_running=true
+      if ! $podman_vm_running; then
+        echo "Starting the podman VM..."
+        podman machine start
+      fi
     fi
   '';
 }
