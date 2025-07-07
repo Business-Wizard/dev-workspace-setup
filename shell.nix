@@ -8,6 +8,7 @@ in
 
 let
   shell_packages = with pkgs; [
+    git
     pre-commit
     uv
     cargo
