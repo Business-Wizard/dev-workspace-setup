@@ -14,6 +14,7 @@ let
     vscode
     docker
       podman
+      jq
   ];
 in
 
@@ -40,7 +41,7 @@ pkgs.mkShell {
     fi
 
     if ! $is_linux; then
-      podman_vm_state=$(podman machine info --format json | jq -r '.MachineState')
+      podman_vm_state=$(podman machine info --format json | jq -r '.Host.MachineState')
       podman_vm_running=false
       [ "$podman_vm_state" = "Running" ] && podman_vm_running=true
       if ! $podman_vm_running; then
