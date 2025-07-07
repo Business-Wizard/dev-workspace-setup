@@ -8,8 +8,6 @@ in
 
 let
   shell_packages = with pkgs; [
-    bat
-    eza
     pre-commit
     uv
     cargo
