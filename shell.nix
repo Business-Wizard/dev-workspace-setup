@@ -1,5 +1,8 @@
 let
-  nixpkgs = fetchTarball "https://github.com/NixOS/nixpkgs/tarball/nixos-25.05";
+  nixpkgs = fetchTarball {
+    url = "https://github.com/NixOS/nixpkgs/tarball/nixos-25.05";
+    sha256 = "062g9k0dn0x6a7pcc4w17gkv7sd8gnbbsbr8cmihqdpsrs355gmp";
+  };
   pkgs = import nixpkgs { config = {allowUnfree=true;}; overlays = []; };
 in
 
