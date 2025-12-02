@@ -130,6 +130,9 @@ wheels = [
 name = "project-name"
 version = "0.1.0"
 source = { virtual = "." }
+dependencies = [
+    { name = "returns" },
+]
 
 [package.dev-dependencies]
 dev = [
@@ -143,6 +146,7 @@ dev = [
 ]
 
 [package.metadata]
+requires-dist = [{ name = "returns", specifier = ">=0.26.0" }]
 
 [package.metadata.requires-dev]
 dev = [
@@ -152,7 +156,7 @@ dev = [
     { name = "pytest", specifier = ">=8.2.2" },
     { name = "pytest-xdist", specifier = ">=3.6.1" },
     { name = "pyyaml", specifier = ">=6.0.1" },
-    { name = "ruff", specifier = ">=0.9" },
+    { name = "ruff", specifier = ">=0.5.2" },
 ]
 
 [[package]]
@@ -211,6 +215,18 @@ wheels = [
     { url = "https://files.pythonhosted.org/packages/fe/0f/25911a9f080464c59fab9027482f822b86bf0608957a5fcc6eaac85aa515/PyYAML-6.0.2-cp313-cp313-musllinux_1_1_x86_64.whl", hash = "sha256:68ccc6023a3400877818152ad9a1033e3db8625d899c72eacb5a668902e4d652", size = 751597, upload-time = "2024-08-06T20:32:56.985Z" },
     { url = "https://files.pythonhosted.org/packages/14/0d/e2c3b43bbce3cf6bd97c840b46088a3031085179e596d4929729d8d68270/PyYAML-6.0.2-cp313-cp313-win32.whl", hash = "sha256:bc2fa7c6b47d6bc618dd7fb02ef6fdedb1090ec036abab80d4681424b84c1183", size = 140527, upload-time = "2024-08-06T20:33:03.001Z" },
     { url = "https://files.pythonhosted.org/packages/fa/de/02b54f42487e3d3c6efb3f89428677074ca7bf43aae402517bc7cca949f3/PyYAML-6.0.2-cp313-cp313-win_amd64.whl", hash = "sha256:8388ee1976c416731879ac16da0aff3f63b286ffdd57cdeb95f3f2e085687563", size = 156446, upload-time = "2024-08-06T20:33:04.33Z" },
+]
+
+[[package]]
+name = "returns"
+version = "0.26.0"
+source = { registry = "https://pypi.org/simple" }
+dependencies = [
+    { name = "typing-extensions" },
+]
+sdist = { url = "https://files.pythonhosted.org/packages/06/c2/6dda7ef39464568152e35c766a8b49ab1cdb1b03a5891441a7c2fa40dc61/returns-0.26.0.tar.gz", hash = "sha256:180320e0f6e9ea9845330ccfc020f542330f05b7250941d9b9b7c00203fcc3da", size = 105300, upload-time = "2025-07-24T13:11:21.772Z" }
+wheels = [
+    { url = "https://files.pythonhosted.org/packages/57/4d/a7545bf6c62b0dbe5795f22ea9e88cc070fdced5c34663ebc5bed2f610c0/returns-0.26.0-py3-none-any.whl", hash = "sha256:7cae94c730d6c56ffd9d0f583f7a2c0b32cfe17d141837150c8e6cff3eb30d71", size = 160515, upload-time = "2025-07-24T13:11:20.041Z" },
 ]
 
 [[package]]

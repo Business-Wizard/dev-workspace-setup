@@ -7,7 +7,9 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">= 3.13"
-dependencies = []
+dependencies = [
+    "returns>=0.26.0",
+]
 
 [tool.uv]
 dev-dependencies = [
