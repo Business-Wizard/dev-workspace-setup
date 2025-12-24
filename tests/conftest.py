@@ -1,6 +1,3 @@
-from _pytest.main import Session
-
-
-def pytest_sessionfinish(session: Session, exitstatus: int):
+def pytest_sessionfinish(session, exitstatus: int):  # noqa: ANN001  # type: ignore UnknownParameterType
     if exitstatus == 5:
         session.exitstatus = 0

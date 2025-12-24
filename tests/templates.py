@@ -31,12 +31,6 @@ import shutil
 import sys
 import time
 import uuid
-from collections.abc import (
-    Callable,
-    Generator,
-    Iterable,
-    Sequence,
-)
 from contextlib import nullcontext as does_not_raise
 from pathlib import Path
 from typing import TYPE_CHECKING, Protocol
@@ -50,8 +44,12 @@ from pyspark.testing import utils  # type: ignore MissingImports
 
 if TYPE_CHECKING:
     from collections.abc import (
+        Callable,
+        Generator,
+        Iterable,
         Iterator,
         MutableSequence,
+        Sequence,
     )
 
 

@@ -6,7 +6,7 @@ authors = [
     { name = "Business-Wizard", email = "49175856+Business-Wizard@users.noreply.github.com" },
 ]
 readme = "README.md"
-requires-python = ">= 3.13"
+requires-python = ">= 3.14"
 dependencies = ["returns>=0.26.0"]
 
 [dependency-groups]
@@ -21,7 +21,7 @@ dev = [
 ]
 
 [tool.ruff]
-target-version = "py313"
+target-version = "py314"
 line-length = 90
 fix = true
 exclude = [
@@ -52,7 +52,7 @@ inline-quotes = "double"
 multiline-quotes = "double"
 
 [tool.pyright]
-pythonVersion = "3.13"
+pythonVersion = "3.14"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
