@@ -9,6 +9,7 @@ in
 let
   shell_packages = with pkgs; [
     git
+    jujutsu
     pre-commit
     uv
     cargo
