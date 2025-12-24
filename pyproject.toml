@@ -40,7 +40,22 @@ exclude = [
 [tool.ruff.lint]
 fixable = ["ALL"]
 unfixable = ["E731"]
-select = ["ALL"]
+select = [
+    "A",
+    "B",
+    "C",
+    "E",
+    "F",
+    "I",
+    "UP",
+    "PL",
+    "PTH",
+    "PGH",
+    "ERA",
+    "RUF",
+    "TRY",
+    "S",
+]
 # maturity path:
 # "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "PGH", "RUF", "ARG", "RET", "PD", "N", "PLC", "PT", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
 ignore = ["PLR2004", "E501", "COM812"]
