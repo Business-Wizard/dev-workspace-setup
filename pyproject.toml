@@ -11,8 +11,8 @@ dependencies = [
     "returns>=0.26.0",
 ]
 
-[tool.uv]
-dev-dependencies = [
+[dependency-groups]
+dev = [
     "invoke>=2.2.0",
     "pre-commit>=3.7.1",
     "pyright>=1.1.372",
