@@ -1,0 +1,12 @@
+[package]
+name = "data_app"
+version = "0.1.0"
+edition = "2024"
+description = "Data-app Rust workspace member with ready-to-run entrypoint."
+license = "MIT"
+authors = ["Data Workspace Template"]
+
+[dependencies]
+
+[lints]
+workspace = true

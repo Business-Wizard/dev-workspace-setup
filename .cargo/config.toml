@@ -1,0 +1,23 @@
+[build]
+target-dir = "target/rust"
+incremental = true
+
+[target.'cfg(all(target_os = "linux", target_arch = "x86_64"))']
+linker = "cc"
+rustflags = ["-C", "link-arg=-fuse-ld=mold"]
+
+[profile.dev]
+opt-level = 0
+codegen-units = 256
+lto = false
+incremental = true
+debug = true
+overflow-checks = true
+
+[profile.release]
+opt-level = 3
+codegen-units = 16
+lto = "thin"
+debug = true
+panic = "abort"
+overflow-checks = true

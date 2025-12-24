@@ -1,0 +1,9 @@
+[workspace]
+members = ["rust/data-app"]
+resolver = "2"
+
+[workspace.metadata]
+default-members = ["rust/data-app"]
+
+[workspace.lints.clippy]
+pedantic = "deny"
