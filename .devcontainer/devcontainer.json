@@ -11,11 +11,7 @@
 	"features": {
 		"ghcr.io/devcontainers/features/git:1": {},
 		"ghcr.io/devcontainers/features/python:1": {},
-		"ghcr.io/devcontainers-contrib/features/bandit:2": {},
-		"ghcr.io/devcontainers-contrib/features/cookiecutter:2": {},
-		"ghcr.io/devcontainers-contrib/features/mypy:2": {},
-		"ghcr.io/devcontainers-contrib/features/nox:2": {},
-		"ghcr.io/devcontainers-contrib/features/pre-commit:2": {},
+		"ghcr.io/devcontainers-extra/features/pre-commit:2": {},
 		"ghcr.io/warrenbuckley/codespace-features/sqlite:1": {}
 	},
 	"customizations": {
