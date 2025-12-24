@@ -11,5 +11,16 @@
         "sourcery.sourcery",
         "usernamehw.errorlens",
         "vscode-icons-team.vscode-icons",
+        "visualjj.visualjj",
+        "pomdtr.excalidraw-editor",
+        "tamasfe.even-better-toml",
+        "tintinweb.graphviz-interactive-preview",
+        "ms-vsliveshare.vsliveshare",
+        "bierner.markdown-emoji",
+        "bierner.markdown-mermaid",
+        "jnoortheen.nix-ide",
+        "rust-lang.rust-analyzer",
+        "codeium.codeium",
+        "redhat.vscode-yaml",
     ]
 }
