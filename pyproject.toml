@@ -7,9 +7,7 @@ authors = [
 ]
 readme = "README.md"
 requires-python = ">= 3.13"
-dependencies = [
-    "returns>=0.26.0",
-]
+dependencies = ["returns>=0.26.0"]
 
 [dependency-groups]
 dev = [
@@ -40,25 +38,11 @@ exclude = [
 [tool.ruff.lint]
 fixable = ["ALL"]
 unfixable = ["E731"]
-select = [
-    "A",
-    "B",
-    "C",
-    "E",
-    "F",
-    "I",
-    "UP",
-    "PL",
-    "PTH",
-    "PGH",
-    "ERA",
-    "RUF",
-    "TRY",
-    "S",
-]
+select = ["ALL"]
 # maturity path:
 # "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "PGH", "RUF", "ARG", "RET", "PD", "N", "PLC", "PT", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
-ignore = ["PLR2004", "E501", "COM812"]
+ignore = ["COM812", "D1", "E501", "PLR2004"]
+per-file-ignores = { "tests/*.py" = ["S101", "ANN201", "INP001"] }
 
 [tool.ruff.lint.mccabe]
 max-complexity = 8
@@ -72,3 +56,4 @@ pythonVersion = "3.13"
 venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
+reportMissingParameterType = false

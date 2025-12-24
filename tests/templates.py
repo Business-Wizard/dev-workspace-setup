@@ -1,4 +1,4 @@
-"""This module contains common test templates, to ease reusability of test code.
+"""Module contains common test templates, to ease reusability of test code.
 
 Naming conventions
 
@@ -19,6 +19,10 @@ Examples, to give ideas:
 - Test{FunctionName}{ErrorHandling}
 """
 
+# pyright: reportUnknownArgumentType=false
+# pyright: reportUnknownMemberType=false
+# pyright: reportUnknownVariableType=false
+# pyright: reportUnknownParameterType=false
 # sourcery skip: no-conditionals-in-tests
 
 import contextlib
@@ -31,24 +35,28 @@ from collections.abc import (
     Callable,
     Generator,
     Iterable,
-    Iterator,
-    MutableSequence,
     Sequence,
 )
 from contextlib import nullcontext as does_not_raise
 from pathlib import Path
-from typing import Protocol
+from typing import TYPE_CHECKING, Protocol
 from unittest import mock
 
-import pandas as pd
+import pandas as pd  # type: ignore MissingImports
 import pytest
-from pyspark import sql
-from pyspark.errors.exceptions import base
-from pyspark.testing import utils
+from pyspark import sql  # type: ignore MissingImports
+from pyspark.errors.exceptions import base  # type: ignore MissingImports
+from pyspark.testing import utils  # type: ignore MissingImports
+
+if TYPE_CHECKING:
+    from collections.abc import (
+        Iterator,
+        MutableSequence,
+    )
 
 
 def function_under_test(sequence_of_numbers: Sequence[int]) -> int:
-    """Simple function that returns the greatest number in a sequence."""
+    """Return the greatest number in a sequence."""
     if non_numbers_in_sequence := {
         maybe_number
         for maybe_number in sequence_of_numbers
@@ -113,7 +121,7 @@ def test_dataframes_should_equal():
 
 
 class ClassUnderTest:
-    def __init__(self, numbers_sequence: Sequence[int]):
+    def __init__(self, numbers_sequence: Sequence[int]) -> None:
         self._construction_guard_clause(numbers_sequence)
 
         self._numbers_sequence = numbers_sequence
@@ -134,17 +142,15 @@ class ClassUnderTest:
 
 class TestDoesNotRaise:
     def test_constructor_should_not_raise(self):
-        """This is a great test to start with, to both cover when the constructor changes,
-        and to demonstrate to readers how to create the object and its dependencies.
-        """
+        """Great test to start with, to both cover when the constructor changes, and to demonstrate to readers how to create the object and its dependencies."""
         numbers_sequence: list[int] = [1, 2, 3, 4, 5]
 
         with does_not_raise():
             ClassUnderTest(numbers_sequence)
 
     def test_function_should_not_raise_with_valid_input(self):
-        """This may be required when working with untestable legacy codebases,
-        or those with side-effects that are hard to isolate.
+        """May be required when working with untestable legacy codebases, or those with side-effects that are hard to isolate.
+
         It focuses on inputs instead of the direct behavior, but can be better than no tests at all.
         """
         test_sequence = [1, 2, 3, 4, 5]
@@ -156,7 +162,7 @@ class TestDoesNotRaise:
 class TestExceptionHandling:
     @staticmethod
     def function_with_exception_handling(sequence_of_numbers: list[int]) -> int:
-        """Simple function that returns the greatest number in a sequence."""
+        """Return the greatest number in a sequence."""
         if non_numbers_in_sequence := {
             maybe_number
             for maybe_number in sequence_of_numbers
@@ -167,7 +173,8 @@ class TestExceptionHandling:
         return max(sequence_of_numbers)
 
     def test_function_should_raise_type_error_when_non_number_given(self):
-        """This is a simple example of catching an expected exception.
+        """Simple example of catching an expected exception.
+
         Catching exceptions in order to give more context to the user should be a sensible default to strive for.
         """
         test_sequence = [1, "non_number"]
@@ -177,7 +184,8 @@ class TestExceptionHandling:
             self.function_with_exception_handling(test_sequence)  # type: ignore[reportArgumentType]
 
     def test_function_should_raise_specific_msg_when_non_number_given(self):
-        """This is a simple example of catching an expected exception.
+        """Simple example of catching an expected exception.
+
         Catching exceptions in order to give more context to the user should be a sensible default to strive for.
         """
         test_sequence = [1, "non_number"]
@@ -188,7 +196,8 @@ class TestExceptionHandling:
             self.function_with_exception_handling(test_sequence)  # type: ignore[reportArgumentType]
 
     def test_function_should_raise_general_msg_when_non_number_given(self):
-        """This is a simple example of catching an expected exception.
+        """Simple example of catching an expected exception.
+
         Catching exceptions in order to give more context to the user should be a sensible default to strive for.
         """
         test_sequence = [1, "non_number"]
@@ -202,7 +211,7 @@ class TestExceptionHandling:
 class TestXfail:
     @staticmethod
     def function_with_unresolved_bug(_sequence_of_numbers: list[int]) -> int:
-        """Simple function that represents a bug that is not yet fixed."""
+        """Dewonstrate a bug that is not yet fixed."""
         msg: str = "This function has a bug that is not yet resolved."
         raise ValueError(msg)
 
@@ -210,10 +219,9 @@ class TestXfail:
         reason="Unresolved bug, caused by... See issue JIRA-0000 for more details."
     )
     def test_function_should_raise_while_bug_unresolved(self):
-        """This is a simple example of catching an expected exception in the test,
-        marking it with an xfail to not halt ongoing development,
-        and to communicate known details about the bug for the rest of the team.
-        Xfail should not be used without including a `reason`.
+        """Xfail should not be used without including a `reason`.
+
+        Simple example of catching an expected exception in the test, marking it with an xfail to not halt ongoing development, and to communicate known details about the bug for the rest of the team.
         """
         input_data = [1, 2, 3, 4, 5]
 
@@ -224,7 +232,8 @@ class TestXfail:
         raises=ValueError,
     )
     def test_function_should_raise_specific_error_while_bug_unresolved(self):
-        """Including specific error type, to aid the bughunt and inform the team.
+        """Include specific error type, to aid the bughunt and inform the team.
+
         Sometimes a flaky part of a system fails for many reasons (commonly a Large Class with too many responsibilities).  It is helpful to have each bug captured in a test, and including each Error type raised helps to isolate each independent bughunt.
         This also helps reduce false-negatives when an undiscovered bug appears, and to detect when a bug unexpectedly gets fixed by a change.
         """
@@ -234,7 +243,7 @@ class TestXfail:
 
     @staticmethod
     def function_that_is_not_implemented(_sequence_of_numbers: list[int]) -> int:
-        """Simple function that represents a feature that is not yet implemented."""
+        """Demonstrate a feature that is not yet implemented."""
         msg: str = "This function is not yet implemented."
         raise NotImplementedError(msg)
 
@@ -243,7 +252,7 @@ class TestXfail:
         raises=NotImplementedError,
     )
     def test_function_should_raise_specific_error_when_not_implemented(self):
-        """This is a technique for creating a test for a feature that is planned to be implemented later."""
+        """Technique for creating a test for a feature that is planned to be implemented later."""
         input_data = [1, 2, 3, 4, 5]
 
         self.function_that_is_not_implemented(input_data)
@@ -255,7 +264,7 @@ class TestXfail:
     def test_catch_platform_specific_bug_via_xfail_args(self):
         """There are times when a bug is caused by or expressed on a specific platform."""
 
-        def _function_to_simulate_platform_based_error():
+        def _function_to_simulate_platform_based_error() -> None:
             if _is_problem_platform := sys.platform in ["darwin", "win32", "win64"]:
                 msg: str = "Platform-specific bug"
                 raise RuntimeError(msg)
@@ -263,8 +272,8 @@ class TestXfail:
         _function_to_simulate_platform_based_error()
 
     def test_catch_very_specific_bug_via_error_message(self):
-        """This advanced technique may be necessary when a test is only partially failing,
-        such as for a platform-specific bug, or a bug that only occurs in certain conditions.
+        """Advanced technique may be necessary when a test is only partially failing, such as for a platform-specific bug, or a bug that only occurs in certain conditions.
+
         Inserting the xfail into a try-except block allows us to only apply an xfail when the bug is expressed.
         Note: If this is required more than once, a helper function for setup is advised to maintain test readability.
         """
@@ -291,29 +300,28 @@ class TestSkip:
         sys.version_info < (3, 10), reason="Requires Python 3.8 or higher"
     )
     def test_that_should_not_run_based_on_py_version(self):
-        """This is an example of skipping a test based on the Python version."""
-        pass
+        """Example of skipping a test based on the Python version."""
 
     @pytest.mark.skipif(
         sys.platform in ["darwin", "win32", "win64"],
         reason="Should not even be run on these platforms",
     )
     def test_that_should_not_run_based_on_platform(self):
-        """In case some code is mistakenly coupled to a platform and should not executed"""
-        pass
+        """In case some code is mistakenly coupled to a platform and should not executed."""
 
     @pytest.mark.skip(
         reason="Unresolved bug that is so bad, we should not even run this test"
     )
     def test_that_is_ruined_and_hard_to_catch_with_conditional(self):
-        """This is very rare.  We may never need to do this, but it is possible.
+        """Very rare case.  We may never need to do this, but it is possible.
+
         It should not be the first choice or a habit, else it's effectively like deleting the test instead of fixing a problem.
         """
-        pass
 
 
 class Transformer(Protocol):
-    """This is a Protocol, sometimes known as an Interface in other languages.
+    """Protocol, sometimes known as an Interface in other languages.
+
     It defines a set of expected attributes or methods that an object has.
     It enables type checking static analysis, Generic Programming and Polymorphism,
     but does not enforce the implementation.
@@ -323,14 +331,15 @@ class Transformer(Protocol):
 
 
 class FakeTransformer(Transformer):
-    """This is a Fake, which is a type of Test Double.
+    """a Fake, which is a type of Test Double.
+
     It is a simplified implementation for testing the Composite CLass.
     It enables faster test runtimes by avoiding expensive IO and compute.
     And enables one to develop a system in gradual parts, instead of all at once.
     """
 
     def transform(self, input_data: sql.DataFrame) -> sql.DataFrame:
-        """filter rows where the number_column is greater than 2"""
+        """Filter rows where the number_column is greater than 2."""
         return input_data.filter(input_data.number_column <= 2)
 
 
@@ -339,6 +348,7 @@ class TestFakeTransformer:
         self, spark: sql.SparkSession
     ):
         """It is important to recognize testing with a stub is not testing the actual behavior of the system.
+
         So don't forget to test the non-Stub version as well.
         Creating a test suite for Test Doubles can ensure they best represent the real objects,
         and to avoid breaking changes to their behaviors.
@@ -363,11 +373,12 @@ class TestFakeTransformer:
 
 
 class CompositeClassUnderTest:
-    """This is simply a class that will be used in our templates, to give a concrete example.
+    """Class that will be used in our templates, to give a concrete example.
+
     It also demonstrates a basic use of Composition, where the behavior is provided by the Transformer object and passed in during construction.
     """
 
-    def __init__(self, behavior_object: Transformer):
+    def __init__(self, behavior_object: Transformer) -> None:
         self._behavior_object: Transformer = behavior_object
 
     def run(self, input_data: sql.DataFrame) -> sql.DataFrame:
@@ -379,17 +390,16 @@ class CompositeClassUnderTest:
 
 class TestCompositeClassUnderTest:
     def test_constructor_should_not_raise(self):
-        """This is a great test to start with, to both cover when the constructor changes,
-        and to demonstrate to readers how to create the object and its dependencies.
-        """
+        """Great test to start with, to both cover when the constructor changes, and to demonstrate to readers how to create the object and its dependencies."""
         fake_transformer: Transformer = FakeTransformer()
 
         with does_not_raise():
             CompositeClassUnderTest(fake_transformer)
 
     def test_run_completes_full_behavior(self, spark: sql.SparkSession):
-        """This can be a straight-forward test design when a Composite Object handles a cohesive set of transformations.
-        Opten, Fakes can fill in when code is coupled to infrastructure details such as cloud services or datastores.
+        """Straight-forward test design when a Composite Object handles a cohesive set of transformations.
+
+        Often, Fakes can fill in when code is coupled to infrastructure details such as cloud services or datastores.
         """
         fake_transformer: Transformer = FakeTransformer()
         composite_object: CompositeClassUnderTest = CompositeClassUnderTest(
@@ -413,7 +423,8 @@ class TestCompositeClassUnderTest:
         utils.assertDataFrameEqual(actual, expected)  # type: ignore[reportUnknownMemberType]
 
     def test_composite_object_calls_behavior_objects(self):
-        """This test approach may be helpful when a Fake or Stub is not easy to create yet.
+        """Test approach that may be helpful when a Fake or Stub is not easy to create yet.
+
         A common example is for untestable legacy codebases, when behavior is coupled directly to cloud services or infrastructure details.
         It can be useful to begin with this Spy-based test design to ensure forward progress.
         """
@@ -430,7 +441,8 @@ class TestCompositeClassUnderTest:
 
 
 class AbstractRepository(Protocol):
-    """This is a Protocol, sometimes known as an Interface in other languages.
+    """Protocol, sometimes known as an Interface in other languages.
+
     It is often an important object to define during TDD, as it enables Test Doubles to accurately match the real objects
     while also being interchangeable (aka Plugin Architecture, Polymorphism).
     """
@@ -441,16 +453,17 @@ class AbstractRepository(Protocol):
 
 
 class CloudRepository(AbstractRepository):
-    """This is a concrete implementation of the AbstractRepository.
+    """Concrete implementation of the AbstractRepository.
+
     One to specifically illustrate why creating Test Doubles is important
     for maintaining a fast test suite.
     """
 
-    def __init__(self):
+    def __init__(self) -> None:
         self._data_store: dict[str, str] = {}
 
     def _cloud_operation(self) -> None:
-        """This method is to illustrate the time loss of waiting for infrastructure operations."""
+        """Illustrate the time loss of waiting for infrastructure operations."""
         time.sleep(10)
 
     def create(self, key: str, value: str) -> None:
@@ -466,8 +479,8 @@ class TestDoubles:
     @pytest.fixture
     def dummy_repo(self) -> AbstractRepository:
         class DummyRepo(AbstractRepository):
-            """A Dummy Test Double stands in for dependencies such as construction or function calls,
-            but is not actually used in execution.
+            """A Dummy Test Double stands in for dependencies such as construction or function calls, but is not actually used in execution.
+
             Note: Needing to use a Dummy may be an indicator of multiple responsibilities or lack of cohesion in the object under test.
             """
 
@@ -478,7 +491,8 @@ class TestDoubles:
         return DummyRepo()
 
     def test_with_dummy_for_dependency(self, dummy_repo: AbstractRepository):
-        """This is an example of using a Dummy
+        """Example of using a Dummy.
+
         Key behaviors: stand-in for dependencies that are not used in the test.
         """
 
@@ -500,7 +514,8 @@ class TestDoubles:
     def test_with_dummy_for_multiple_responsibilities(
         self, dummy_repo: AbstractRepository
     ):
-        """This is an example of using a Dummy when the object under test has multiple responsibilities.
+        """Example of using a Dummy when the object under test has multiple responsibilities.
+
         Key behaviors: allow us to isolate the test to one behavior at a time.
         """
 
@@ -508,7 +523,8 @@ class TestDoubles:
         def function_that_does_too_much(
             input_data: int, repo: AbstractRepository
         ) -> tuple[int, str]:
-            """This function represents a common example of multiple responsibilities in a single object.
+            """Demonstrate common example of multiple responsibilities in a single object.
+
             Notice that the two returns are not related, and could be separated into two different functions.
             Before refactoring, we can use a Dummy to isolate the test to one behavior at a time.
             """
@@ -529,35 +545,40 @@ class TestDoubles:
     @pytest.fixture
     def fake_repo(self) -> AbstractRepository:
         class FakeRepo(AbstractRepository):
-            """Fakes can be useful for replacing behaviors that are coupled to infrastructure details,
-            or that have significant compute requirements.
+            """Fakes can be useful for replacing behaviors that are coupled to infrastructure details, or that have significant compute requirements.
+
             They can also stand in for Singletons such as global config store objects.
             """
 
-            def __init__(self):
+            def __init__(self) -> None:
                 self._data: dict[str, str] = {}
 
             def create(self, key: str, value: str) -> None:
                 """Note the lack of time used with the cloud operation.
-                This is an important benefit of using Fakes - keeping tests very fast.
+
+                Important benefit of using Fakes - keeping tests very fast.
                 """
                 self._data[key] = value
 
             def read(self, key: str) -> str:
                 """Note the lack of time used with the cloud operation.
-                This is an important benefit of using Fakes - keeping tests very fast.
+
+                Important benefit of using Fakes - keeping tests very fast.
                 """
                 return self._data[key]
 
         return FakeRepo()
 
     def test_with_fake(self, fake_repo: AbstractRepository):
-        """This is an example of using a Fake
+        """Example of using a Fake.
+
         Key behaviors: provide working implementations, but not suitable for production.
         """
 
         def get_and_parse_value(repo: AbstractRepository, key: str) -> int:
-            """This function represents a common example of a behavior that is commonly coupled to infrastructure details.
+            """Read from infrastructure, apply simple transformation, return value.
+
+            Function represents a common example of a behavior that is commonly coupled to infrastructure details.
             But because of using a common Protocol/Interface, we can easily swap out the real object for a Fake.
             """
             value = repo.read(key)
@@ -578,18 +599,20 @@ class TestDoubles:
     def stub_repo(self) -> AbstractRepository:
         class StubRepo(AbstractRepository):
             """Stubs can be useful for providing static data or responses.
+
             They can also be used to simulate edge cases or error conditions.
             """
 
             def create(self, key: str, value: str) -> None: ...
 
-            def read(self, _key: str) -> str:
+            def read(self, key: str) -> str:  # noqa: ARG002
                 return "2"
 
         return StubRepo()
 
     def test_with_stub(self, stub_repo: AbstractRepository):
         """Stubs are good for providing static data, to focus on the behavior of the object under test.
+
         Providing static data such as dataframes and arrays is one example, to keep tests deterministic.
         """
 
@@ -612,11 +635,12 @@ class TestDoubles:
     def mock_repo(self) -> AbstractRepository:
         class MockRepo(AbstractRepository):
             """Mocks are effectively a type of Spy, when the behavior is also wanted to be replaced.
+
             You can think of Mocks like a hybrid Dummy-Spy or Stub-Spy, depending on the use case.
             Key behaviors: record calls to the object, for assertion of arguments or sequence of calls.
             """
 
-            def __init__(self):
+            def __init__(self) -> None:
                 self.create_call_count: int = 0
                 self.create_call_args: MutableSequence[tuple[str, str]] = []
                 self.read_call_count: int = 0
@@ -627,7 +651,7 @@ class TestDoubles:
                 self.create_call_args.append((key, value))
 
             def read(self, key: str) -> str:
-                """Returning a static datum like a Stub might, but also recording the call."""
+                """Return a static datum like a Stub might, but also recording the call."""
                 self.read_call_count += 1
                 self.read_call_args.append(key)
                 return "2"
@@ -636,6 +660,7 @@ class TestDoubles:
 
     def test_with_mock(self, mock_repo: AbstractRepository):
         """Mocks are useful for recording interactions with the object under test.
+
         This is common for Composite Objects, that orchestrate the interactions of many modular objects to achieve a Usecase.
         """
 
@@ -659,17 +684,19 @@ class TestDoubles:
 
 class TestFixtures:
     """Fixtures are a powerful tool for handling setup and teardown of infrastructure, data, or objects.
+
     Anytime you are working with side-effects, such as IO, network, or databases, you should consider using a Fixture.
     key benefits: decouple tests from infrastructure details and reduce test runtime, ensure tests don't leave side-effects.
     """
 
     class DirectorySorter:
         """A simple object to illustrate the use of Fixtures.
+
         Responsibilities: parse a directory, and sort the files in it.
         Note: this object is not coupled to the details of the directory, such as hard-coded paths.
         """
 
-        def __init__(self, directory: Path):
+        def __init__(self, directory: Path) -> None:
             self._directory: Path = directory
 
         def get_sorted_filepaths(self) -> Sequence[Path]:
@@ -678,15 +705,16 @@ class TestFixtures:
             return tuple(sorted_filepaths)
 
     def test_10_handle_full_setup_and_cleanup(self):
-        """This is the worst-case scenario of needing to pollute the test with setup and cleanup code.
-        There is a persistent risk of leaving side-effects when errors occur
+        """Is the worst-case scenario of needing to pollute the test with setup and cleanup code.
+
+        There is a persistent risk of leaving side-effects when errors occur.
         """
         # Setup
         uuid_suffix: str = str(
             uuid.uuid4()
         )  # uuid to ensure unique folder name, to avoid conflicts with other parallel tests
         # create the folder inside of /tmp/, to help ensure clean up even in case of test failure
-        directory_name: str = f"/tmp/test_folder_{uuid_suffix}"
+        directory_name: str = f"/tmp/test_folder_{uuid_suffix}"  # noqa: S108
         directory: Path = Path(directory_name)
         directory.mkdir()
 
@@ -711,9 +739,7 @@ class TestFixtures:
         # Cleanup
 
     def test_20_use_empty_tmp_path_fixture(self, tmp_path: Path):
-        """If your object is not coupled to the details of the directory, such as hard-coded paths,
-        then the `tmp_path` fixture can be a great option for testing.
-        """
+        """If your object is not coupled to the details of the directory, such as hard-coded paths, then the `tmp_path` fixture can be a great option for testing."""
         file_1: Path = tmp_path / "file_1.txt"
         file_2: Path = tmp_path / "file_2.txt"
         file_1.touch()
@@ -730,9 +756,7 @@ class TestFixtures:
 
     @pytest.fixture
     def temp_folder_with_files(self, tmp_path: Path) -> Path:
-        """When we see many cohesive tests using the same setup steps,
-        it can be a good usecase for a fixture.
-        """
+        """When we see many cohesive tests using the same setup steps, it can be a good usecase for a fixture."""
         file_1: Path = tmp_path / "file_1.txt"
         file_2: Path = tmp_path / "file_2.txt"
         file_1.touch()
@@ -740,9 +764,7 @@ class TestFixtures:
         return tmp_path
 
     def test_30_use_setup_fixture(self, temp_folder_with_files: Path):
-        """Contrast this test with the one above.
-        We can improve readability and reliability by moving some setup steps into a fixture.
-        """
+        """Contrast this test with the one above.  We can improve readability and reliability by moving some setup steps into a fixture."""
         # Given
         directory_sorter = self.DirectorySorter(temp_folder_with_files)
 
@@ -760,7 +782,7 @@ class TestFixtures:
     def create_temp_folder_with_files(
         self, tmp_path: Path
     ) -> Callable[[Iterable[str]], Path]:
-        """This is a fixture factory.  Is is useful when you need to parameterize the fixture differently in each test."""
+        """Is a fixture factory.  Is is useful when you need to parameterize the fixture differently in each test."""
 
         def wrapped_func(file_names: Iterable[str]) -> Path:
             filepaths: Iterator[Path] = (tmp_path / file_name for file_name in file_names)
@@ -790,10 +812,10 @@ class TestFixtures:
     def create_temp_infrastructure_and_handle_cleanup(
         self, tmp_path: Path
     ) -> Generator[Callable[[Iterable[str]], Path]]:
-        """This is also a fixture factory, but with a manual cleanup step after the yield.
+        """Is also a fixture factory, but with a manual cleanup step after the yield.
+
         Fixtures ensure any code after the yield is run after the test, even if the test fails.
         """
-
         created_folders: MutableSequence[Path] = []  # collector of side-effects
 
         def wrapped_func(file_names: Iterable[str]) -> Path:
