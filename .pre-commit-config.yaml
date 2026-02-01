@@ -31,10 +31,10 @@ repos:
       - id: ruff-check
         args: ["--fix"]
       - id: ruff-format
-  - repo: https://github.com/RobertCraigie/pyright-python
-    rev: v1.1.408
+  - repo: https://github.com/DetachHead/basedpyright-pre-commit-mirror
+    rev: 1.37.2
     hooks:
-      - id: pyright
+      - id: basedpyright
   - repo: https://github.com/doublify/pre-commit-rust
     rev: v1.0
     hooks:

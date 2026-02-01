@@ -13,7 +13,7 @@ dependencies = ["returns>=0.26.0"]
 dev = [
     "invoke>=2.2.0",
     "pre-commit>=3.7.1",
-    "pyright>=1.1.372",
+    "basedpyright>=1.1.372",
     "pytest>=8.2.2",
     "pytest-xdist>=3.6.1",
     "pyyaml>=6.0.1",
@@ -51,7 +51,7 @@ max-complexity = 8
 inline-quotes = "double"
 multiline-quotes = "double"
 
-[tool.pyright]
+[tool.basedpyright]
 pythonVersion = "3.14"
 venvPath = "."
 venv = ".venv"
