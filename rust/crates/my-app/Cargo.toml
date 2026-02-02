@@ -7,6 +7,8 @@ license = "MIT"
 authors = ["Data Workspace Template"]
 
 [dependencies]
+anyhow = "1.0"
+thiserror = "1.0"
 
 [lints]
 workspace = true
