@@ -1,6 +1,7 @@
 mod controller;
 mod presenter;
 mod view_model;
+mod domain;
 mod feature_name;
 
 fn main() {
