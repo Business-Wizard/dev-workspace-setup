@@ -1,9 +1,9 @@
 [workspace]
-members = ["rust/data-app"]
+members = ["data-app"]
 resolver = "2"
 
 [workspace.metadata]
-default-members = ["rust/data-app"]
+default-members = ["data-app"]
 
 [workspace.lints.clippy]
 pedantic = "deny"

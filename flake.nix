@@ -33,10 +33,10 @@
           shellHook = ''
             has_pyproject=false
 
-            [ -f "pyproject.toml" ] && has_pyproject=true
+            [ -f "python/pyproject.toml" ] && has_pyproject=true
 
-            if [ ! -d ".venv" ] && $has_pyproject; then
-              uv sync
+            if [ ! -d "python/.venv" ] && $has_pyproject; then
+              cd python && uv sync && cd ..
             fi
           '';
         };

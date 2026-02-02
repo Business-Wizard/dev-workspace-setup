@@ -68,9 +68,9 @@ repos:
         language: system
         name: pytest
         types: [python]
-        entry: .venv/bin/pytest
+        entry: python/.venv/bin/pytest
         args:
-          - "tests/"
+          - "python/tests/"
           - "-m"
           - "not network"
         pass_filenames: false
