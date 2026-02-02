@@ -1,9 +1,9 @@
 [workspace]
-members = ["my-app"]
+members = ["crates/my-app"]
 resolver = "2"
 
 [workspace.metadata]
-default-members = ["my-app"]
+default-members = ["crates/my-app"]
 
 [workspace.lints.clippy]
 pedantic = "deny"
