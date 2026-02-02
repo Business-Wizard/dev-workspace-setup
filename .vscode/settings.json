@@ -88,13 +88,10 @@
     "workbench.iconTheme": "vscode-icons",
     "git.branchProtectionPrompt": "alwaysCommit",
     "editor.defaultFormatter": "charliermarsh.ruff",
-    "mypy-type-checker.args": [
-        "--follow-imports=silent",
-        "--ignore-missing-imports",
-        "--show-column-numbers",
-        "--no-pretty",
-        "--continue-on-collection-errors",
-        "--show-error-codes",
-        "--warn-unused-ignores"
-    ]
+    // "workbench.editor.limit.enabled": true,
+    // "workbench.editor.limit.perEditorGroup": true,
+    // "workbench.editor.limit.value": 2,
+    // "workbench.editor.showTabs": "single",
+    "workbench.editor.enablePreview": true,
+    "workbench.editor.revealIfOpen": true
 }
