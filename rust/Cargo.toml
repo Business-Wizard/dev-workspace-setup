@@ -1,9 +1,9 @@
 [workspace]
-members = ["data-app"]
+members = ["my-app"]
 resolver = "2"
 
 [workspace.metadata]
-default-members = ["data-app"]
+default-members = ["my-app"]
 
 [workspace.lints.clippy]
 pedantic = "deny"

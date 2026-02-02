@@ -1,8 +1,8 @@
 [package]
-name = "data_app"
+name = "my-app"
 version = "0.1.0"
 edition = "2024"
-description = "Data-app Rust workspace member with ready-to-run entrypoint."
+description = "My app Rust implementation."
 license = "MIT"
 authors = ["Data Workspace Template"]
 

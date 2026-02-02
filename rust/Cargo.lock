@@ -3,5 +3,5 @@
 version = 4
 
 [[package]]
-name = "data_app"
+name = "my-app"
 version = "0.1.0"
