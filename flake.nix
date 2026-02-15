@@ -25,6 +25,7 @@
             rustup
             vscode
             claude-code
+            claude-monitor
             docker
             podman
             jq
