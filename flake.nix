@@ -30,16 +30,6 @@
             podman
             jq
           ];
-
-          shellHook = ''
-            has_pyproject=false
-
-            [ -f "python/pyproject.toml" ] && has_pyproject=true
-
-            if [ ! -d "python/.venv" ] && $has_pyproject; then
-              cd python && uv sync && cd ..
-            fi
-          '';
         };
       }
     );
