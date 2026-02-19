@@ -2,7 +2,7 @@
   description = "Development Environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/nixos-25.11";
+    nixpkgs.url = "github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
