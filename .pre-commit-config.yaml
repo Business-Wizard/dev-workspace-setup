@@ -73,9 +73,9 @@ repos:
         pass_filenames: false
       - id: no-mod-rs
         name: no_mod_rs
-        language: pygrep
-        entry: 'mod\.rs$'
-        types: [file]
+        language: fail
+        entry: 'mod.rs files are not allowed; use the module-name file pattern instead'
+        files: '(^|/)mod\.rs$'
       - id: pytest
         language: system
         name: pytest
