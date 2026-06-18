@@ -77,7 +77,9 @@
     ]
   },
   "autoMode": {
-    "environment": "Development workspace template with Rust and Python support, Nix Flakes for reproducible environments, prek hooks for code quality, and Jujutsu (jj) for version control",
+    "environment": [
+      "Development workspace template with Rust and Python support, Nix Flakes for reproducible environments, prek hooks for code quality, and Jujutsu (jj) for version control"
+    ],
     "allow": [
       "Use jj (Jujutsu) for ALL version control operations - NEVER use git directly",
       "Run tests via cargo test (Rust) or pytest (Python)",
@@ -88,22 +90,10 @@
       "Install dependencies via cargo (Rust) or uv pip (Python)"
     ],
     "soft_deny": [
-      {
-        "description": "NEVER use git commands directly - use jj (Jujutsu) exclusively",
-        "reasoning": "This template enforces Jujutsu workflow. Git commands are explicitly forbidden. Use 'jj' for all version control operations."
-      },
-      {
-        "description": "Do not delete files or directories without explicit confirmation",
-        "reasoning": "Prevent accidental data loss in template users' projects"
-      },
-      {
-        "description": "Do not modify Nix flake.lock without running nix flake update",
-        "reasoning": "Lock file must be updated through proper Nix commands to maintain integrity"
-      },
-      {
-        "description": "Do not bypass prek hooks with --no-verify flags",
-        "reasoning": "prek hooks enforce code quality standards that should not be skipped"
-      }
+      "NEVER use git commands directly - use jj (Jujutsu) exclusively. Git commands are explicitly forbidden. Use 'jj' for all version control operations.",
+      "Do not delete files or directories without explicit confirmation. Prevent accidental data loss in template users' projects.",
+      "Do not modify Nix flake.lock without running nix flake update. Lock file must be updated through proper Nix commands to maintain integrity.",
+      "Do not bypass prek hooks with --no-verify flags. prek hooks enforce code quality standards that should not be skipped."
     ]
   }
 }
