@@ -41,8 +41,8 @@
             # Export UV_PYTHON to ensure uv uses Python 3.14
             export UV_PYTHON=python3.14
 
-            # Auto-create and activate virtual environment
-            if [ ! -d .venv ]; then
+            # Auto-create and activate virtual environment (only if pyproject.toml exists)
+            if [ -f pyproject.toml ] && [ ! -d .venv ]; then
               echo "Creating virtual environment..."
               uv sync
             fi
@@ -53,9 +53,9 @@
             fi
 
             # Install Talisman git hook if not already installed
-            if [ ! -f .git/hooks/pre-commit ] || ! grep -q "talisman" .git/hooks/pre-commit; then
+            if [ -f .git/hooks ] && { [ ! -f .git/hooks/pre-commit ] || ! grep -q "talisman" .git/hooks/pre-commit 2>/dev/null; }; then
               echo "Installing Talisman pre-commit hook..."
-              talisman --install-pre-commit-hook
+              talisman --install-pre-commit-hook 2>/dev/null || echo "Note: Talisman will be available once nix build completes"
             fi
           '';
         };

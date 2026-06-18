@@ -24,14 +24,17 @@ The development environment includes:
 - VSCode
 - Docker and Podman
 - jq
+- Talisman (secret detection)
 
 ### What Happens Automatically
 
-When you `cd` into this directory:
+When you `cd` into this directory or run `nix develop`:
 1. **Nix Environment**: direnv loads the flake, installing all declared dependencies
 2. **Prompt appears immediately** - you can start typing right away
-3. **Python venv**: If you have a `pyproject.toml` and `.venv` exists, it activates before your first command (via zsh precmd hook)
-4. **All tools available**: Git, Rust, cargo, uv, Docker, Podman, and more are in your PATH
+3. **Python venv**: The shellHook automatically creates `.venv` via `uv sync` (if it doesn't exist) and activates it
+4. **Environment variables**: `UV_PYTHON=python3.14` is exported automatically
+5. **Git hooks**: Talisman pre-commit hook is installed automatically for secret detection
+6. **All tools available**: Git, Rust, cargo, uv, Docker, Podman, and more are in your PATH
 
 ### Environment Loading Speed
 
@@ -82,6 +85,64 @@ Once added to your shell config:
 - venv: Auto-activated before first command
 - First run: shellHook runs `uv sync` to create `.venv` if needed
 
+### Secret Detection
+
+This template includes **Talisman** for enterprise-grade secret detection. Talisman automatically scans commits for potential secrets, API keys, passwords, and sensitive information.
+
+**Automatic Installation**
+
+When you enter the dev shell (`nix develop` or via direnv), the shellHook automatically installs Talisman as a git pre-commit hook. No manual setup required.
+
+**How It Works**
+
+Talisman scans files during `git commit` and blocks commits if it detects:
+- API keys and tokens
+- Private keys and certificates
+- Passwords and secrets
+- High-entropy strings that look like credentials
+
+**Allowlisting Legitimate Secrets**
+
+Sometimes files legitimately contain secrets (encrypted configs, test fixtures, etc.) or trigger false positives. To allowlist these files:
+
+1. Add the file to `.talismanrc`:
+   ```yaml
+   fileignoreconfig:
+     - filename: path/to/file.txt
+       checksum: ""
+   ```
+
+2. Generate the checksum:
+   ```bash
+   talisman --checksum path/to/file.txt
+   ```
+
+3. Add the checksum to `.talismanrc`:
+   ```yaml
+   fileignoreconfig:
+     - filename: path/to/file.txt
+       checksum: "abc123def456..."
+   ```
+
+4. Commit proceeds after allowlisting.
+
+**Updating Checksums**
+
+When you modify an allowlisted file, Talisman will detect the changed checksum. Regenerate checksums:
+
+```bash
+# Regenerate all checksums in .talismanrc
+talisman --update-checksums
+```
+
+**Two-Layer Defense**
+
+This template uses defense-in-depth:
+- **Talisman** (via native git hook): Sophisticated pattern matching, checksum allowlisting
+- **detect-private-key** (via pre-commit): Basic private key detection
+
+Both run automatically on commit.
+
 ### Managing Podman VM (macOS)
 
 Podman is included in the project dependencies, but VM startup is optional and personal preference:
@@ -125,3 +186,103 @@ nix develop
 - **Faster builds**: `.cargo/config.toml` reuses `target/rust`, enables incremental builds, and lifts developer `codegen-units`, while Linux builds pass `-fuse-ld=mold` for quicker linking; install `mold` plus a compatible linker (e.g. `cc`) before enabling it in your environment.
 - **Profiles tuned for iteration & CI releases**: dev builds keep overflow checks on with high parallelism, release builds use thin-LTO/panic-abort defaults to keep iteration fast without sacrificing correctness.
 - **Getting started**: run `cargo run -p data_app` from the repo root to exercise the template; add additional members under `rust/` and the workspace `members` array as needed.
+
+## Nix Customization
+
+This template demonstrates a custom Nix package pattern that allows you to package tools not available in nixpkgs or customize existing packages.
+
+### Directory Structure
+
+```
+nix/
+├── overlays.nix    # Overlay system that exposes custom packages
+└── talisman.nix    # Example custom package (Talisman v1.37.0)
+```
+
+### How It Works
+
+1. **Package Definition**: Custom packages are defined in `nix/` directory (e.g., `talisman.nix`)
+2. **Overlay System**: `nix/overlays.nix` imports packages and exposes them to pkgs
+3. **Flake Integration**: `flake.nix` applies overlays when importing nixpkgs
+4. **Usage**: Custom packages appear in `pkgs` namespace like any nixpkgs package
+
+### Example: Talisman Package
+
+The `nix/talisman.nix` file demonstrates a complete package definition:
+
+```nix
+{ lib, buildGoModule, fetchFromGitHub }:
+
+buildGoModule rec {
+  pname = "talisman";
+  version = "1.37.0";
+
+  src = fetchFromGitHub {
+    owner = "thoughtworks";
+    repo = "talisman";
+    rev = "v${version}";
+    hash = "sha256-...";
+  };
+
+  vendorHash = "sha256-...";
+
+  meta = with lib; {
+    description = "Git hook that scans for secrets";
+    homepage = "https://thoughtworks.github.io/talisman/";
+    license = licenses.mit;
+  };
+}
+```
+
+### Adding Your Own Packages
+
+1. Create a new package file in `nix/`:
+   ```bash
+   touch nix/my-tool.nix
+   ```
+
+2. Define the package (see `nix/talisman.nix` as reference):
+   ```nix
+   { stdenv, fetchurl }:
+
+   stdenv.mkDerivation rec {
+     pname = "my-tool";
+     version = "1.0.0";
+     # ... package definition
+   }
+   ```
+
+3. Add to `nix/overlays.nix`:
+   ```nix
+   final: prev: {
+     talisman = prev.callPackage ./talisman.nix { };
+     my-tool = prev.callPackage ./my-tool.nix { };  # Add this line
+   }
+   ```
+
+4. Add to `flake.nix` buildInputs:
+   ```nix
+   buildInputs = with pkgs; [
+     # ... existing packages
+     my-tool  # Add this line
+   ];
+   ```
+
+5. Test the build:
+   ```bash
+   nix build .#my-tool
+   ./result/bin/my-tool --version
+   ```
+
+### Benefits
+
+- **Version Control**: Pin exact versions of tools (not dependent on nixpkgs update cycles)
+- **Reproducibility**: Same package definition works across all team members
+- **Customization**: Patch or modify packages as needed
+- **Extension Point**: Easy to add project-specific tooling
+
+### References
+
+- [Nix Pills](https://nixos.org/guides/nix-pills/) - Deep dive into Nix packaging
+- [nixpkgs Manual](https://nixos.org/manual/nixpkgs/stable/) - Package definition patterns
+- [Talisman GitHub](https://github.com/thoughtworks/talisman) - Example tool packaged in this template
