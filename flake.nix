@@ -2,7 +2,8 @@
   description = "Development Environment";
 
   inputs = {
-    nixpkgs.url = "github:NixOS/nixpkgs/0182a361324364ae3f436a63005877674cf45efb";
+    # nixos-25.11 @ 2026-06-17
+    nixpkgs.url = "github:NixOS/nixpkgs/d6df3513510aa548c83868fd22bfddd0a8c0a0d4";
     flake-utils.url = "github:numtide/flake-utils";
   };
 
@@ -33,7 +34,30 @@
             docker
             podman
             jq
+            talisman
           ];
+
+          shellHook = ''
+            # Export UV_PYTHON to ensure uv uses Python 3.14
+            export UV_PYTHON=python3.14
+
+            # Auto-create and activate virtual environment
+            if [ ! -d .venv ]; then
+              echo "Creating virtual environment..."
+              uv sync
+            fi
+
+            # Activate virtual environment
+            if [ -f .venv/bin/activate ]; then
+              source .venv/bin/activate
+            fi
+
+            # Install Talisman git hook if not already installed
+            if [ ! -f .git/hooks/pre-commit ] || ! grep -q "talisman" .git/hooks/pre-commit; then
+              echo "Installing Talisman pre-commit hook..."
+              talisman --install-pre-commit-hook
+            fi
+          '';
         };
       }
     );
