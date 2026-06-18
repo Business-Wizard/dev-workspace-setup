@@ -1,0 +1,17 @@
+# Talisman Configuration
+# This file allows you to allowlist files that contain legitimate secrets
+# or trigger false positives in Talisman's secret detection.
+#
+# To add a file to the allowlist:
+# 1. Add the file path to the fileignoreconfig array below
+# 2. Generate the checksum: `talisman --checksum <file>`
+# 3. Add the checksum value to the entry
+#
+# To update checksums when allowlisted files change:
+# Run `talisman --update-checksums` and Talisman will regenerate all checksums
+
+fileignoreconfig:
+  # Dependency lock files often trigger false positives
+  - filename: uv.lock
+    checksum: ""  # Replace with actual checksum if needed
+    # To generate: talisman --checksum uv.lock
