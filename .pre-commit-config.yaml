@@ -66,6 +66,16 @@ repos:
         language: system
   - repo: local
     hooks:
+      - id: cargo-test
+        name: cargo_test
+        language: system
+        entry: cargo test --workspace
+        pass_filenames: false
+      - id: no-mod-rs
+        name: no_mod_rs
+        language: pygrep
+        entry: 'mod\.rs$'
+        types: [file]
       - id: pytest
         language: system
         name: pytest
