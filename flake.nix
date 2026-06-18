@@ -11,7 +11,11 @@
       let
         pkgs = import nixpkgs {
           inherit system;
-          config = { allowUnfree = true; };
+          config = {
+            allowUnfree = true;
+            permittedInsecurePackages = [ "docker-28.5.2" ];
+          };
+          overlays = [ (import ./nix/overlays.nix) ];
         };
       in
       {

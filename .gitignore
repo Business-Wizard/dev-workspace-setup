@@ -141,3 +141,10 @@ dmypy.json
 
 # Mac OS files
 *.DS_Store
+
+# Talisman backup files
+.talismanrc.backup
+
+# Nix build results
+result
+result-*

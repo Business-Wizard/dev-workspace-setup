@@ -8,10 +8,10 @@ buildGoModule rec {
     owner = "thoughtworks";
     repo = "talisman";
     rev = "v${version}";
-    hash = "sha256-AAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAAA=";
+    hash = "sha256-gdXyN+sFy60dAmkiUDLWllA8mnk3PnNMXT9xJ7/SUpg=";
   };
 
-  vendorHash = "sha256-BBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBBB=";
+  vendorHash = "sha256-YxApJIF8ebzRBF5Fxh5/hQYHgKhC1/eQ4ra91+jdzPs=";
 
   subPackages = [ "." ];
 
