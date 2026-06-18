@@ -20,6 +20,8 @@ repos:
       - id: check-xml
       - id: check-yaml
       - id: destroyed-symlinks
+      # Note: Talisman secret detection runs via native git hook (see shellHook in flake.nix)
+      # This detect-private-key hook remains as an additional safety layer
       - id: detect-private-key
       - id: end-of-file-fixer
       - id: mixed-line-ending
