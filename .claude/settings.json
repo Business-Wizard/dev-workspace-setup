@@ -1,0 +1,109 @@
+{
+  "permissions": {
+    "allow": [
+      "Bash(cat *)",
+      "Bash(jj *)",
+      "Bash(prek *)",
+      "Bash(ls *)",
+      "Bash(find *)",
+      "Bash(grep *)",
+      "Bash(echo *)",
+      "Bash(uv *)",
+      "Bash(cargo *)",
+      "Bash(rustc *)",
+      "Bash(rustup *)",
+      "Bash(pytest *)",
+      "Bash(python *)",
+      "Bash(nix *)",
+      "Bash(podman *)",
+      "Bash(docker *)"
+    ],
+    "deny": [
+      "Bash(git *)",
+      "Bash(jj git *)",
+      "Bash(rm -rf *)",
+      "Bash(sudo *)"
+    ],
+    "ask": [
+      "Bash(rm *)",
+      "Bash(mv *)"
+    ],
+    "defaultMode": "plan"
+  },
+  "hooks": {
+    "SessionStart": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '✓ Development workspace initialized. Using jj for version control.'"
+          }
+        ]
+      }
+    ],
+    "PostToolUse": [
+      {
+        "matcher": "Edit(**/**.{rs,py,ts,tsx,js,jsx,json,toml,yaml,yml,md})",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prek run --files {path} || true"
+          }
+        ]
+      }
+    ],
+    "TaskCompleted": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "echo '✓ Task completed. Run tests if needed.'"
+          }
+        ]
+      }
+    ],
+    "Stop": [
+      {
+        "matcher": "*",
+        "hooks": [
+          {
+            "type": "command",
+            "command": "prek run --all-files || true"
+          }
+        ]
+      }
+    ]
+  },
+  "autoMode": {
+    "environment": "Development workspace template with Rust and Python support, Nix Flakes for reproducible environments, prek hooks for code quality, and Jujutsu (jj) for version control",
+    "allow": [
+      "Use jj (Jujutsu) for ALL version control operations - NEVER use git directly",
+      "Run tests via cargo test (Rust) or pytest (Python)",
+      "Use prek for code formatting and validation",
+      "Use nix develop to enter development environment",
+      "Format code automatically on edits via PostToolUse hooks",
+      "Read and modify project files as needed for tasks",
+      "Install dependencies via cargo (Rust) or uv pip (Python)"
+    ],
+    "soft_deny": [
+      {
+        "description": "NEVER use git commands directly - use jj (Jujutsu) exclusively",
+        "reasoning": "This template enforces Jujutsu workflow. Git commands are explicitly forbidden. Use 'jj' for all version control operations."
+      },
+      {
+        "description": "Do not delete files or directories without explicit confirmation",
+        "reasoning": "Prevent accidental data loss in template users' projects"
+      },
+      {
+        "description": "Do not modify Nix flake.lock without running nix flake update",
+        "reasoning": "Lock file must be updated through proper Nix commands to maintain integrity"
+      },
+      {
+        "description": "Do not bypass prek hooks with --no-verify flags",
+        "reasoning": "prek hooks enforce code quality standards that should not be skipped"
+      }
+    ]
+  }
+}

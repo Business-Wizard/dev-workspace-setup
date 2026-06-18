@@ -148,3 +148,7 @@ dmypy.json
 # Nix build results
 result
 result-*
+
+# Claude Code local configuration
+.claude/settings.local.json
+.claude/worktrees/
