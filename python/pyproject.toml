@@ -39,7 +39,7 @@ unfixable = ["E731"]
 select = ["ALL"]
 # maturity path:
 # "E", "F", "W", "UP", "I", "NPY", "A", "PTH", "PLR", "PGH", "RUF", "ARG", "RET", "PD", "N", "PLC", "PT", "INP", "TRY", "SIM", "TD", "PLW", "BLE", "B", "DTZ", "G", "PGH", "Q", "ERA", "EM", "FLY", "PT", "ISC", "SLF"
-ignore = ["COM812", "D1", "D203", "D212", "E501", "PLR2004"]
+ignore = ["COM812", "D1", "D203", "D213", "E501", "PLR2004"]
 per-file-ignores = { "tests/*.py" = ["S101", "ANN201", "INP001"] }
 
 [tool.ruff.lint.mccabe]
