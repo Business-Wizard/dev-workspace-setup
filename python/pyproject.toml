@@ -5,7 +5,6 @@ description = "My app Python implementation."
 authors = [
     { name = "Business-Wizard", email = "49175856+Business-Wizard@users.noreply.github.com" },
 ]
-readme = "README.md"
 requires-python = ">= 3.14"
 dependencies = ["returns>=0.26.0"]
 
@@ -56,3 +55,7 @@ venv = ".venv"
 typeCheckingMode = "strict"
 reportMissingParameterType = false
 exclude = ["tests/templates.py"]
+
+[build-system]
+requires = ["uv_build>=0.9.0,<0.10"]
+build-backend = "uv_build"
