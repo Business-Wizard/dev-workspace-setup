@@ -55,3 +55,4 @@ venvPath = "."
 venv = ".venv"
 typeCheckingMode = "strict"
 reportMissingParameterType = false
+exclude = ["tests/templates.py"]
