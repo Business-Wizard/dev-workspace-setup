@@ -6,7 +6,9 @@ authors = [
     { name = "Business-Wizard", email = "49175856+Business-Wizard@users.noreply.github.com" },
 ]
 requires-python = ">= 3.14"
-dependencies = ["returns>=0.26.0"]
+dependencies = [
+    "pyochain>=0.27.0",
+]
 
 [dependency-groups]
 dev = [
